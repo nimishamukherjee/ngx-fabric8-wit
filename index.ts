@@ -9,6 +9,7 @@ export { ContextTypes } from './src/app/contexts/context-types';
 export { WIT_API_URL } from './src/app/api/wit-api';
 
 // Spaces
+export { SpaceTemplate } from './src/app/space-template/space-template';
 export { ProcessTemplate } from './src/app/models/process-template';
 export {
   Space,
@@ -20,6 +21,7 @@ export {
 } from './src/app/models/space';
 export { Team } from './src/app/models/team';
 export { SpaceService } from './src/app/spaces/space.service';
+export { SpaceTemplateService } from './src/app/space-template/space-template.service';
 export { Spaces } from './src/app/spaces/spaces';
 export { UniqueSpaceNameValidatorDirective} from './src/app/spaces/unique-space-name.directive';
 export { ValidSpaceNameValidatorDirective } from './src/app/spaces/valid-space-name.directive';
@@ -42,3 +44,4 @@ export {
   GenericData,
   RelationGeneric
 } from './src/app/models/generic';
+
