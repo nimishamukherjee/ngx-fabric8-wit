@@ -60,6 +60,15 @@ describe('Directive for Name Space', () => {
             related: 'http://example.com/api/spaces/1/iterations'
           }
         },
+        'space-template': {
+          data: {
+            id: '',
+            type: 'spacetemplates'
+          },
+          links: {
+            related: 'http://roro.com'
+          }
+        },
         'owned-by': {
           'data': {
             'id': '00000000-0000-0000-0000-000000000000',

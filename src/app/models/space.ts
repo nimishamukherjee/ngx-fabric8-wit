@@ -27,13 +27,8 @@ export class SpaceLink {
 export class SpaceRelationships {
     areas: SpaceRelatedLink;
     iterations: SpaceRelatedLink;
-<<<<<<< HEAD
-    // this change breaks in fabric8-ui, fix it there to include this. 
-    //collaborators: SpaceRelatedLink;
-=======
     collaborators: SpaceRelatedLink;
     'space-template': SpaceTemplateRelation;
->>>>>>> 9814eb6... fix(space-template): add space-template to the space model
     'owned-by': {
       data: {
         id: string;

@@ -6,15 +6,14 @@ import { cloneDeep } from 'lodash';
 
 import { AuthenticationService, UserService, AUTH_API_URL, User } from 'ngx-login-client';
 import { Broadcaster, Logger } from 'ngx-base';
-
 import { WIT_API_URL } from "../api/wit-api";
-import { CollaboratorService } from './space-template.service';
+import { SpaceTemplateService } from './space-template.service';
+import { SpaceTemplate } from './space-template';
 
 describe('Service: SpaceTemplateService', () => {
-
-  let collaboratorService: CollaboratorService;
   let mockService: MockBackend;
   let fakeAuthService: any;
+  let service: SpaceTemplateService;
 
   beforeEach(() => {
     fakeAuthService = {
@@ -40,7 +39,6 @@ describe('Service: SpaceTemplateService', () => {
           provide: AuthenticationService,
           useValue: fakeAuthService
         },
-        CollaboratorService,
         {
           provide: WIT_API_URL,
           useValue: "http://example.com"
@@ -49,42 +47,55 @@ describe('Service: SpaceTemplateService', () => {
           provide: AUTH_API_URL,
           useValue: 'http://example.com/auth'
         },
-        UserService,
+        SpaceTemplateService,
         Broadcaster
       ]
     });
   });
 
   beforeEach(inject(
-    [CollaboratorService, MockBackend],
-    (service: CollaboratorService, mock: MockBackend) => {
-      collaboratorService = service;
+    [MockBackend, SpaceTemplateService],
+    (mock: MockBackend, serviceInjected: SpaceTemplateService) => {
       mockService = mock;
+      service = serviceInjected;
     }
   ));
 
-  let responseData: User[] = [
-    {
-      "attributes": {
-        "bio": "",
-        "email": "user@gmail.com",
-        "fullName": "user name",
-        "imageURL": "https://www.gravatar.com/avatar/asdf.jpg",
-        "url": "https://user.github.io",
-        "username": "useruser"
-      },
-      "id": "6abd2970-9407-469d-a8ad-9e18706d732c",
-      "links": {
-        "self": "https://api.openshift.io/api/users/6abd2970-9407-469d-a8ad-9e18706d732c"
-      },
-      "type": "identities"
-    }
-  ];
-  let response = { data: responseData, links: {} };
-  let expectedResponse = cloneDeep(responseData);
+let spaceTemplates = [
+  {
+    "attributes": {
+      "created-at": "0001-01-01T00:00:00Z",
+      "description": "Scrum-based planning",
+      "name": "Scrum",
+      "template": "LS0tC",
+      "updated-at": "0001-01-01T00:00:00Z",
+      "version": 0
+    },
+    "id": "aa83de92-33c1-44d1-a6ff-3b9a89ead383",
+    "links": {
+      "self": "http://localhost:8080/api/spacetemplates/aa83de92-33c1-44d1-a6ff-3b9a89ead383"
+    },
+    "type": "spacetemplates"
+  },
+  {
+    "attributes": {
+      "created-at": "2017-05-29T15:55:47.752546Z",
+      "description": "A very simple development methodology focused on the tracking of Issues and the Tasks needed to be completed to resolve a particular Issue.",
+      "name": "Issue Tracking",
+      "template": "LS0tCW5nIgoBUYXNrIgogICAgdG9wb2xvZ3k6IHRyZWUKLi4u",
+      "updated-at": "2017-05-29T15:55:47.752546Z",
+      "version": 0
+    },
+    "id": "018443b8-e204-4913-96f7-1802eec235b4",
+    "links": {
+      "self": "http://localhost:8080/api/spacetemplates/018443b8-e204-4913-96f7-1802eec235b4"
+    },
+    "type": "spacetemplates"
+  }];
+  let response = { data: spaceTemplates, links: {} };
 
-
-  it('Get collaborators', async(() => {
+  it('Get Space Templates', async(() => {
+    // given
     mockService.connections.subscribe((connection: any) => {
       connection.mockRespond(new Response(
         new ResponseOptions({
@@ -94,25 +105,23 @@ describe('Service: SpaceTemplateService', () => {
       ));
     });
 
-    collaboratorService.getAllBySpaceId('1').subscribe((data: User[]) => {
-      expect(data[0].id).toEqual(expectedResponse[0].id);
-      expect(data[0].attributes.username).toEqual(expectedResponse[0].attributes.username);
-    });
+    // when
+    service.getSpaceTemplates().subscribe(data => {
+      // then
+      expect(data[0].id).toEqual(spaceTemplates[0].id);
+      expect(data[0].attributes.name).toEqual(spaceTemplates[0].attributes.name);
+     });
   }));
 
-  it('Add new collaborators', async(() => {
+  it('Get Space Templates in error', async(() => {
+    // given
     mockService.connections.subscribe((connection: any) => {
-      connection.mockRespond(new Response(
-        new ResponseOptions({
-          body: JSON.stringify({data: ['id1']}),
-          status: 201
-        })
-      ));
+      connection.mockError(new Error('some error'));
     });
-
-    collaboratorService.addCollaborators('1', responseData)
-      .subscribe(() => {
-        expect('1').toEqual('1');
-      });
+    // when
+    service.getSpaceTemplates().subscribe(data => {
+        fail('Get Space Templates in error');
+      }, // then
+      error => expect(error).toEqual('some error'));
   }));
 });
