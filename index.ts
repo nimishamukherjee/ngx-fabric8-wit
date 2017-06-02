@@ -10,7 +10,6 @@ export { WIT_API_URL } from './src/app/api/wit-api';
 
 // Spaces
 export { SpaceTemplate } from './src/app/space-template/space-template';
-export { ProcessTemplate } from './src/app/models/process-template';
 export {
   Space,
   SpaceAttributes,

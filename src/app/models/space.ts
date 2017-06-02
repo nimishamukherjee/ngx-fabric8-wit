@@ -1,11 +1,9 @@
 import { Team } from './team';
-import { ProcessTemplate } from './process-template';
 import { User } from "ngx-login-client";
 
 export interface Space {
     name: string;
     path: String;
-    //process?: ProcessTemplate;
     privateSpace?: boolean;
     teams: Team[];
     defaultTeam: Team;
@@ -27,7 +25,7 @@ export class SpaceLink {
 export class SpaceRelationships {
     areas: SpaceRelatedLink;
     iterations: SpaceRelatedLink;
-    collaborators: SpaceRelatedLink;
+    // collaborators: SpaceRelatedLink;
     'space-template': SpaceTemplateRelation;
     'owned-by': {
       data: {

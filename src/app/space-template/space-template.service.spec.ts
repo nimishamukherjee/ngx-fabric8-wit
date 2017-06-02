@@ -14,8 +14,10 @@ describe('Service: SpaceTemplateService', () => {
   let mockService: MockBackend;
   let fakeAuthService: any;
   let service: SpaceTemplateService;
+  let loggerMock: any;
 
   beforeEach(() => {
+    loggerMock = jasmine.createSpyObj('Looger', ['error'])
     fakeAuthService = {
       getToken: function () {
         return '';
@@ -26,7 +28,9 @@ describe('Service: SpaceTemplateService', () => {
     };
     TestBed.configureTestingModule({
       providers: [
-        Logger,
+        {
+          provide: Logger, useValue: loggerMock
+        },
         BaseRequestOptions,
         MockBackend,
         {

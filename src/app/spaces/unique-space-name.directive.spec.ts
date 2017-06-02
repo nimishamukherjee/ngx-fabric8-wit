@@ -55,11 +55,6 @@ describe('Directive for Name Space', () => {
             related: 'http://example.com/api/spaces/1/iterations'
           }
         },
-        collaborators: {
-          links: {
-            related: 'http://example.com/api/spaces/1/iterations'
-          }
-        },
         'space-template': {
           data: {
             id: '',

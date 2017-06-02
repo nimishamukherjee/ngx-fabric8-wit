@@ -97,11 +97,6 @@ describe('Service: SpaceService', () => {
             related: 'http://example.com/api/spaces/1/iterations'
           }
         },
-        collaborators: {
-          links: {
-            related: 'http://example.com/api/spaces/1/iterations'
-          }
-        },
         'space-template': {
           data: {
             id: '',
